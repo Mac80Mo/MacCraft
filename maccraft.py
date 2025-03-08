@@ -14,6 +14,15 @@ Sky()
 # Erstelle eine leere Liste zur Speicherung aller Boxen
 boxes = []
 
+# Globaler Modus: "box" für Boden, "stone" für Stein
+current_mode = "box"
+
+# Optional: Anzeige des aktuellen Modus als Text in der Ecke
+mode_text = Text(text=f'Modus: {current_mode}', origin=(0,0), position=(0,0.45), scale=2)
+
+# Erklärender Text unterhalb des Modus-Textes:
+instruction_text = Text(text="1 für Box | 2 für Stein | 3 für Holz", origin=(0,0), position=(0,0.35), scale=1)
+
 # Funktion, die eine zufällige Farbe generiert
 def random_color():
     # Erzeuge zufällige Werte für Rot, Grün und Blau (Skalierung auf 255)
@@ -48,22 +57,48 @@ def add_stone(pos):
         )
     )
 
+# Neue Funktion für Steine, die grau sind.
+def add_wood(pos):
+    boxes.append(
+        Button(
+            parent=scene,
+            model="cube",
+            origin=0.5,
+            color=color.yellow,      
+            position=pos
+        )
+    )
+
 # Erstelle ein 20x20 Raster von Boxen als Boden
 for x in range(20):
     for y in range(20):
         add_box((x, 0, y))
 
-# Funktion zur Eingabeverarbeitung
 def input(key):
-    # Gehe alle Boxen durch
+    global current_mode
+    # Umschalten der Modi:
+    if key == "1":
+        current_mode = "box"
+        mode_text.text = f"Modus: {current_mode}"
+    elif key == "2":
+        current_mode = "stone"
+        mode_text.text = f"Modus: {current_mode}"
+    elif key == "3":
+        current_mode = "wood"
+        mode_text.text = f"Modus: {current_mode}"
+    
+    # Eingabe zur Platzierung oder Entfernung von Blöcken:
     for box in boxes:
-        # Prüfe, ob die Maus über der Box schwebt
         if box.hovered:
             if key == "left mouse down":
-                # Füge eine neue Box hinzu, angrenzend an die aktuell angeklickte Box
-                add_stone(box.position + mouse.normal)
+                # Abhängig vom aktuellen Modus den entsprechenden Block hinzufügen
+                if current_mode == "box":
+                    add_box(box.position + mouse.normal)
+                elif current_mode == "stone":
+                    add_stone(box.position + mouse.normal)
+                elif current_mode == "wood":
+                    add_wood(box.position + mouse.normal)
             if key == "right mouse down":
-                # Entferne die angeklickte Box aus der Liste und zerstöre sie in der Szene
                 boxes.remove(box)
                 destroy(box)
 
