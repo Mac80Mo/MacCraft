@@ -2,6 +2,9 @@
 
 Ein einfaches Minecraft-ähnliches Spiel, das mit der Ursina Engine entwickelt wurde. In diesem Spiel kannst du in einer 3D-Welt Blöcke platzieren und entfernen.
 
+![Bild](pics/Screenshot 2025-03-08 145451.png)
+
+
 ## Features
 
 - **Boden:**  
