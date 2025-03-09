@@ -21,7 +21,7 @@ current_mode = "box"
 mode_text = Text(text=f'Modus: {current_mode}', origin=(0,0), position=(0,0.45), scale=2)
 
 # Erklärender Text unterhalb des Modus-Textes:
-instruction_text = Text(text="1 für Box | 2 für Stein | 3 für Holz", origin=(0,0), position=(0,0.35), scale=1)
+instruction_text = Text(text="Press -> 1 für Box | 2 für Stein | 3 für Holz", origin=(0,0), position=(0,0.35), scale=0.5)
 
 # Funktion, die eine zufällige Farbe generiert
 def random_color():
